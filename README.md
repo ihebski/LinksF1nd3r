@@ -7,7 +7,7 @@ Extracts links from an HTML page and display them with friendly way ,this tool c
 
 ## Features
 
-* Extract all the links not only the <a href="#"> tags
+* Extract all the links not only the <a href="#"></> tags
 * Identifying the extention of the linked file
 * Generate report
 * Count the links based on the extension
