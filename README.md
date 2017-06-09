@@ -28,7 +28,7 @@ python linksF1nd3r.py http://127.0.0.1/links.php
 
 * Testing on real website [Stack]
 ~~~
-python linksF1nd3r.py http://127.0.0.1/links.php
+python linksF1nd3r.py https://stackoverflow.com/questions/11487049/python-list-of-lists
 ~~~
 ![screen_3](http://i.imgur.com/DdeK4bF.png)
 
