@@ -39,7 +39,7 @@ python linksF1nd3r.py https://stackoverflow.com/questions/11487049/python-list-o
 ##### Clone
  - Clone the repository with:
 ```sh
-$ https://github.com/ihebski/LinksF1nd3r.git
+$ git clone https://github.com/ihebski/LinksF1nd3r.git
 $ cd LinksF1nd3r
 $ python linksF1nd3r.py
 ```
