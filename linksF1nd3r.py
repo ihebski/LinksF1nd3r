@@ -3,7 +3,7 @@
 '''
  Extracts links from an HTML page and display them with friendly way ,this tool could be used for web information gathering ,to get more details about the web
  application.
-'''1
+'''
 __author__ = "Ihebski (S0ld1er)"
 __copyright__ = "Copyright 2017, Bugs_Bunny Team | Pentesting Tools"
 __version__ = "0.5"
