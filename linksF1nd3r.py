@@ -15,6 +15,8 @@ __info__ ="LinksF1nd3r"
 
 try: 
 	import sys
+	reload(sys)
+	sys.setdefaultencoding('utf-8')
 	import urllib2
 	from bs4 import BeautifulSoup
 	import re
