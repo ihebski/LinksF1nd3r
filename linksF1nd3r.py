@@ -4,6 +4,7 @@
  Extracts links from an HTML page and display them with friendly way ,this tool could be used for web information gathering ,to get more details about the web
  application.
 '''
+import imp
 __author__ = "Ihebski (S0ld1er)"
 __copyright__ = "Copyright 2017, Bugs_Bunny Team | Pentesting Tools"
 __version__ = "0.5"
@@ -15,17 +16,17 @@ __info__ ="LinksF1nd3r"
 
 try: 
 	import sys
-	import urllib2
+	import urllib.request, urllib.error, urllib.parse
 	from bs4 import BeautifulSoup
 	import re
 	import os
 	import colorama
 	from colorama import Fore, Back, Style 
 	from colorama import init
-	from urlparse import urlparse
+	from urllib.parse import urlparse
 	import time
 except Exception as err:
-	print "[!] "+str(err)
+	print("[!] "+str(err))
 	sys.exit(0)
 
 LIGHTRED = '\033[91m'
@@ -35,14 +36,14 @@ YL = '\033[33m'
 
 
 def banner():
-	print Fore.BLUE+".__  .__        __           ___________.__            .___            "
-	print LIGHTRED +"|  | |__| ____ |  | __  _____\_   _____/|__| ____    __| _/___________ "
-	print 			"|  | |  |/    \|  |/ / /  ___/|    __)  |  |/    \  / __ |/ __ \_  __ \""
-	print 			"|  |_|  |   |  \    <  \___ \ |     \   |  |   |  \/ /_/ \  ___/|  | \/"
-	print  		    "|____/__|___|  /__|_ \/____  >\___  /   |__|___|  /\____ |\___  >__|   "
-	print Fore.BLUE+ "             \/     \/     \/     \/            \/      \/    \/      "
-	print LIGHTRED+ " ==============================================> by S0ld1er \n"
-	print Fore.YELLOW+"[ JS ] "+Fore.CYAN+"[ PHP ]"+Fore.MAGENTA+"[ IMG ]"+YL+"[ HTML ]"+Fore.GREEN+"[ Unkown ]\n"
+	print(Fore.BLUE+".__  .__        __           ___________.__            .___            ")
+	print(LIGHTRED +"|  | |__| ____ |  | __  _____\_   _____/|__| ____    __| _/___________ ")
+	print("|  | |  |/    \|  |/ / /  ___/|    __)  |  |/    \  / __ |/ __ \_  __ \"")
+	print("|  |_|  |   |  \    <  \___ \ |     \   |  |   |  \/ /_/ \  ___/|  | \/")
+	print("|____/__|___|  /__|_ \/____  >\___  /   |__|___|  /\____ |\___  >__|   ")
+	print(Fore.BLUE+ "             \/     \/     \/     \/            \/      \/    \/      ")
+	print(LIGHTRED+ " ==============================================> by S0ld1er \n")
+	print(Fore.YELLOW+"[ JS ] "+Fore.CYAN+"[ PHP ]"+Fore.MAGENTA+"[ IMG ]"+YL+"[ HTML ]"+Fore.GREEN+"[ Unkown ]\n")
 
 def usage():
 	'''
@@ -50,7 +51,7 @@ def usage():
 	'''
 	scr = os.path.basename(sys.argv[0])
 	banner()
-	print Fore.CYAN+"python links.py URL"
+	print(Fore.CYAN+"python links.py URL")
 
 def start(argv):
 	if len(sys.argv) < 2:
@@ -60,7 +61,7 @@ def start(argv):
 	o = urlparse(url)
 	if o[0] not in ['http','https', 'ftp']:
 		banner()
-		print Fore.RED+"[!] Please checkout your URL http://, https:// or ftp://"
+		print(Fore.RED+"[!] Please checkout your URL http://, https:// or ftp://")
 		sys.exit(0)		
 	banner()	
 	report(url)	
@@ -71,14 +72,11 @@ def serchLinks(url):
 	'''
 	Search for all the urls with http:// or https:// regx and all the <a href=""> tags
 	'''
-	website = urllib2.urlopen(url)
+	website = urllib.request.urlopen(url)
 	html = website.read()
 	soup = BeautifulSoup(html,'lxml')
 	#use re.findall to get all the links with http:// or https:// url
 	mylinks =[]
-	links = re.findall('"((http|ftp)s?://.*?)"', html)
-	for x in links:
-		mylinks.append(x[0])
 
 	# Find all the href links in <a > tags	
 	for link in soup.find_all('a', href=True):
@@ -99,29 +97,29 @@ def report(url):
 	links = serchLinks(url)
 	for link in links:
 		if 'js' in link:
-			print Fore.YELLOW+"[{time}] -[ JS ] - {mylink}".format(mylink=link,time=time.strftime("%H:%M:%S"))
+			print(Fore.YELLOW+"[{time}] -[ JS ] - {mylink}".format(mylink=link,time=time.strftime("%H:%M:%S")))
 			js_+=1
 		elif 'php' in link:
-			print Fore.CYAN+"[{time}] -[ PHP ] - {mylink}".format(mylink=link,time=time.strftime("%H:%M:%S"))
+			print(Fore.CYAN+"[{time}] -[ PHP ] - {mylink}".format(mylink=link,time=time.strftime("%H:%M:%S")))
 			PHP_+=1
 		elif 'jpg' in link or 'png' in link or 'jpg' in link:
-			print Fore.MAGENTA+"[{time}] -[ IMG ] - {mylink}".format(mylink=link,time=time.strftime("%H:%M:%S"))
+			print(Fore.MAGENTA+"[{time}] -[ IMG ] - {mylink}".format(mylink=link,time=time.strftime("%H:%M:%S")))
 			IMG+=1
 		elif 'html' in link:
-			print YL+"[{time}] -[ HTML ] - {mylink}".format(mylink=link,time=time.strftime("%H:%M:%S"))
+			print(YL+"[{time}] -[ HTML ] - {mylink}".format(mylink=link,time=time.strftime("%H:%M:%S")))
 			html +=1
 		else:
-			print Fore.GREEN+"[{time}] - [ ! ] - {mylink}".format(mylink=link,time=time.strftime("%H:%M:%S"))
+			print(Fore.GREEN+"[{time}] - [ ! ] - {mylink}".format(mylink=link,time=time.strftime("%H:%M:%S")))
 			Other+=1
-	print "================== Report =================="
-	print Fore.WHITE+" URL => "+url
-	print Fore.WHITE+"[TOTALE] => [ JS = {js} ] - [ PHP = {php} ] - [ IMG = {img} ] - [ HTML = {html} ] - [ Unknown = {unkonwn} ]".format(js=js_,php=PHP_,img=IMG,unkonwn=Other,html=html)
+	print("================== Report ==================")
+	print(Fore.WHITE+" URL => "+url)
+	print(Fore.WHITE+"[TOTALE] => [ JS = {js} ] - [ PHP = {php} ] - [ IMG = {img} ] - [ HTML = {html} ] - [ Unknown = {unkonwn} ]".format(js=js_,php=PHP_,img=IMG,unkonwn=Other,html=html))
 	
 
 if __name__ == "__main__":
 	try:
 		start(sys.argv[1:])
 	except KeyboardInterrupt as err:
-		print r+"\n[!] By... :)"+t
+		print(r+"\n[!] By... :)"+t)
 		sys.exit(0)
 
